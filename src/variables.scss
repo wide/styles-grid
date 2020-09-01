@@ -1,0 +1,115 @@
+///
+/// Prefix for all grid classes.
+///
+/// @type string
+///
+/// @access private
+///
+$grid-prefix: '' !default;
+
+///
+/// Grid gutter length.
+/// Must be a pixel value.
+///
+/// @type Length
+///
+/// @access private
+///
+$grid-gutter: 15px !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// CONTAINER
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Container's breakpoints list.
+///
+/// @type List
+/// @prop {string} value - css properties
+///
+/// @access private
+///
+$containers: (
+  'xs': (
+    max-width: 320px
+  ),
+  'sm': (
+    max-width: 540px
+  ),
+  'md': (
+    max-width: 720px
+  ),
+  'lg': (
+    max-width: 960px
+  ),
+  'xl': (
+    max-width: 1140px
+  ),
+  'xxl': (
+    max-width: 1540px
+  )
+) !default;
+
+///
+/// Containers prefix
+///
+/// @type string
+///
+/// @access private
+///
+$containers-prefix: $grid-prefix !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// ROWS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Max columns for basic provided `.row-col-{bp}-{col}` classes.
+///
+/// @type number
+///
+/// @access private
+///
+$rows-cols-max-columns: 6 !default;
+
+///
+/// Rows prefix
+///
+/// @type string
+///
+/// @access private
+///
+$rows-prefix: $grid-prefix !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// COLS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Number of columns in the grid.
+///
+/// @type number
+///
+/// @access private
+///
+$cols: 12 !default;
+
+///
+/// Cols prefix
+///
+/// @type string
+///
+/// @access private
+///
+$cols-prefix: $grid-prefix !default;
+$offset-prefix: $grid-prefix !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+///

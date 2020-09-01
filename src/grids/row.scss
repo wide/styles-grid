@@ -1,0 +1,90 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use '@wide/styles-utils' as utils;
+@use '../variables' as *;
+
+///
+/// Set row class.
+///
+@mixin row-helper() {
+  @if meta.variable-exists(grid-gutter) {
+    .#{$rows-prefix}row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: -#{utils.rem($grid-gutter)};
+      margin-left: -#{utils.rem($grid-gutter)};
+    }
+  } @else {
+    @error '[style-grids -> styles-grid -> row] : The variable $grid-gutter is undefined';
+  }
+}
+
+///
+/// Set all row-cols classes.
+/// Specify on a parent element(e.g., .row) to force immediate children
+/// into NN numberof columns.
+///
+/// @requires {number} rows-cols-max-columns
+///
+@mixin row-cols-helper($bp: '') {
+  @if meta.type-of($rows-cols-max-columns) != number {
+    @error '`#{$rows-cols-max-columns}` needs to be a number.';
+  }
+
+  @for $i from 1 through $rows-cols-max-columns {
+    $percent: 100% / $i;
+
+    .#{$rows-prefix}row-cols-#{$i}#{$bp} {
+      > *,
+      > .#{$cols-prefix}col {
+        flex: 0 0 $percent;
+        max-width: $percent;
+      }
+    }
+  }
+}
+
+///
+/// Set all row-cols classes with breakpoints media queries.
+///
+/// @requires {mixin} utils-bp-up
+/// @requires {string} utils-delimiter-breakpoint
+///
+/// @see row-cols-helper
+///
+@mixin row-cols-helper-with-bp() {
+  @each $breakpoint, $value in utils.$breakpoints {
+    $index: list.index(map.keys(utils.$breakpoints), $breakpoint);
+
+    @if $index > 1 {
+      @include utils.bp-up($breakpoint) {
+        @include row-cols-helper(#{utils.$delimiter-breakpoint}#{$breakpoint});
+      }
+    }
+
+    @include utils.bp-only($breakpoint) {
+      @include row-cols-helper('#{utils.$delimiter-breakpoint}#{$breakpoint}-only');
+    }
+  }
+}
+
+///
+/// Helper `row` entry point
+///
+/// Combine `row-helper`, `row-cols-helper` and `row-cols-helper-with-bp` helpers in one helper.
+///
+/// @param {boolean} $with-bp - Add breakpoint classes.
+///
+/// @see row-helper
+/// @see row-cols-helper
+/// @see row-cols-helper-with-bp
+///
+@mixin row($with-bp: true) {
+  @include row-helper;
+  @include row-cols-helper;
+
+  @if $with-bp {
+    @include row-cols-helper-with-bp;
+  }
+}

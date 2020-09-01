@@ -1,0 +1,102 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use '@wide/styles-utils' as utils;
+@use '../variables' as *;
+
+///
+/// Common rules.
+///
+@mixin col-common-rules() {
+  position: relative;
+  width: 100%;
+  padding-right: utils.rem($grid-gutter);
+  padding-left: utils.rem($grid-gutter);
+}
+
+///
+/// Set col class.
+///
+@mixin col-helper() {
+  .#{$cols-prefix}col {
+    @include col-common-rules;
+
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+}
+
+///
+/// Set all cols classes.
+///
+@mixin cols-helper($bp: '') {
+  .#{$cols-prefix}col-auto#{$bp} {
+    @include col-common-rules;
+
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  @for $i from 1 through $cols {
+    $percent: 100% / ($cols / $i);
+
+    .#{$cols-prefix}col-#{$i}#{$bp} {
+      @include col-common-rules;
+
+      flex: 0 0 $percent;
+      max-width: $percent;
+    }
+
+    @if $i != $cols {
+      .#{$offset-prefix}offset-#{$i}#{$bp} {
+        margin-left: $percent;
+      }
+    }
+  }
+}
+
+///
+/// Set all cols classes with breakpoints media queries.
+///
+/// @requires {mixin} utils-bp-up
+/// @requires {string} utils-delimiter-breakpoint
+///
+/// @see cols-helper
+///
+@mixin cols-helper-with-bp() {
+  @each $breakpoint, $value in utils.$breakpoints {
+    $index: list.index(map.keys(utils.$breakpoints), $breakpoint);
+
+    @if $index > 1 {
+      @include utils.bp-up($breakpoint) {
+        @include cols-helper(#{utils.$delimiter-breakpoint}#{$breakpoint});
+      }
+    }
+
+    @include utils.bp-only($breakpoint) {
+      @include cols-helper('#{utils.$delimiter-breakpoint}#{$breakpoint}-only');
+    }
+  }
+}
+
+///
+/// Helper `col` entry point
+///
+/// Combine `col-helper`, `cols-helper` and `cols-helper-with-bp` helpers in one helper.
+///
+/// @param {boolean} $with-bp - Add breakpoint classes.
+///
+/// @see col-helper
+/// @see cols-helper
+/// @see cols-helper-with-bp
+///
+@mixin col($with-bp: true) {
+  @include col-helper;
+  @include cols-helper;
+
+  @if $with-bp {
+    @include cols-helper-with-bp;
+  }
+}

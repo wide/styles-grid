@@ -1,0 +1,83 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use '@wide/styles-utils' as utils;
+@use '../variables' as *;
+
+///
+/// Set all container classes.
+///
+/// @param {string} $bp - Breakpoint string key.
+///
+@mixin container-helper($bp: '') {
+  @if meta.variable-exists(grid-gutter) {
+    .#{$containers-prefix}container#{$bp}, .#{$containers-prefix}container-fluid {
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+      padding-right: utils.rem($grid-gutter);
+      padding-left: utils.rem($grid-gutter);
+    }
+  } @else {
+    @error '[style-grids -> styles-grid -> container] : The variable $grid-gutter is undefined';
+  }
+}
+
+///
+/// Set all container classes with breakpoints media queries.
+///
+/// @requires {mixin} utils-bp-up
+/// @requires {string} utils-delimiter-breakpoint
+///
+/// @see container-helper
+///
+@mixin container-helper-with-bp() {
+  @if meta.variable-exists(containers) {
+    $containers-classes: '';
+
+    @each $breakpoint, $properties in $containers {
+      // set breakpoint properties
+      @if $containers-classes != '' {
+        // output: .container\@sm, .container\@md, ...
+        $containers-classes: '#{$containers-classes}, .#{$containers-prefix}container#{utils.$delimiter-breakpoint}#{$breakpoint}';
+      } @else {
+        // output: @sm
+        $containers-classes: #{utils.$delimiter-breakpoint}#{$breakpoint};
+      }
+
+      @each $property in $properties {
+        // security: check there are two properties (css attribute and value)
+        @if list.length($property) == 2 {
+          @include utils.bp-up($breakpoint) {
+            .#{$containers-prefix}container, .#{$containers-prefix}container#{$containers-classes} {
+              #{list.nth($property, 1)}: list.nth($property, 2);
+            }
+          }
+        }
+      }
+    }
+
+    // set default properties
+    @include container-helper($containers-classes);
+  } @else {
+    @error '[style-grids -> styles-grid -> container] : The variable $containers is undefined';
+  }
+}
+
+///
+/// Helper `container` entry point
+///
+/// Combine both `container-helper` and `container-helper-with-bp` helpers in one helper.
+///
+/// @param {boolean} $with-bp - Add breakpoint classes.
+///
+/// @see container-helper
+/// @see container-helper-with-bp
+///
+@mixin container($with-bp: true) {
+  @include container-helper;
+
+  @if $with-bp {
+    @include container-helper-with-bp;
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@wide/styles-grid",
+  "version": "2.0.0",
+  "description": "SCSS Modulus UI Grid",
+  "license": "MIT",
+  "author": "Sébastien Robillard (https://github.com/robiseb)",
+  "contributors": [
+    "Aymeric Assier (https://github.com/myeti)",
+    "Julien Martins Da Costa (https://github.com/jdacosta)",
+    "Sébastien Robillard (https://github.com/robiseb)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wide/styles-grid.git"
+  }, 
+  "scripts": {
+    "lint": "stylelint *.scss src --formatter verbose"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@wide/styles-utils": "^2.0.0"
+  },
+  "devDependencies": {
+    "@wide/stylelint-config": "^2.0.0",
+    "stylelint": "^13.5.0",
+    "stylelint-config-property-sort-order-smacss": "^6.3.0",
+    "stylelint-order": "^4.0.0",
+    "stylelint-scss": "^3.17.2"
+  }
+}
