@@ -1,5 +1,16 @@
+///
+/// Common
+///
 @use 'src/common';
 
+///
+/// Variables
+///
+@forward 'src/variables';
+
+///
+/// Grid
+///
 @forward 'src/grids/container';
 @forward 'src/grids/row';
 @forward 'src/grids/col';
