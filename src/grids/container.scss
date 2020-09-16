@@ -15,8 +15,8 @@
       width: 100%;
       margin-right: auto;
       margin-left: auto;
-      padding-right: utils.rem($grid-gutter);
-      padding-left: utils.rem($grid-gutter);
+      padding-right: utils.rem($grid-gutter / 2);
+      padding-left: utils.rem($grid-gutter / 2);
     }
   } @else {
     @error '[style-grids -> styles-grid -> container] : The variable $grid-gutter is undefined';
