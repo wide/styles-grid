@@ -12,8 +12,8 @@
     .#{$rows-prefix}row {
       display: flex;
       flex-wrap: wrap;
-      margin-right: -#{utils.rem($grid-gutter)};
-      margin-left: -#{utils.rem($grid-gutter)};
+      margin-right: -#{utils.rem($grid-gutter / 2)};
+      margin-left: -#{utils.rem($grid-gutter / 2)};
     }
   } @else {
     @error '[style-grids -> styles-grid -> row] : The variable $grid-gutter is undefined';
