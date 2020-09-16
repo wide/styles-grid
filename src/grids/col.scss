@@ -10,8 +10,8 @@
 @mixin col-common-rules() {
   position: relative;
   width: 100%;
-  padding-right: utils.rem($grid-gutter);
-  padding-left: utils.rem($grid-gutter);
+  padding-right: utils.rem($grid-gutter / 2);
+  padding-left: utils.rem($grid-gutter / 2);
 }
 
 ///
