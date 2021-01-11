@@ -69,12 +69,13 @@ $containers-prefix: $grid-prefix !default;
 
 ///
 /// Max columns for basic provided `.row-col-{bp}-{col}` classes.
+/// If enabled, recommended value: 6
 ///
-/// @type number
+/// @type number|boolean
 ///
 /// @access private
 ///
-$rows-cols-max-columns: 6 !default;
+$rows-cols-max-columns: false !default;
 
 ///
 /// Rows prefix
