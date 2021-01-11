@@ -82,9 +82,12 @@
 ///
 @mixin row($with-bp: true) {
   @include row-helper;
-  @include row-cols-helper;
 
-  @if $with-bp {
-    @include row-cols-helper-with-bp;
+  @if type-of($rows-cols-max-columns) == 'number' and $rows-cols-max-columns > 0 {
+    @include row-cols-helper;
+
+    @if $with-bp {
+      @include row-cols-helper-with-bp;
+    }
   }
 }
