@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 @use '@wide/styles-utils' as utils;
 @use '../variables' as *;
@@ -12,8 +13,8 @@
     .#{$rows-prefix}row {
       display: flex;
       flex-wrap: wrap;
-      margin-right: -#{utils.rem($grid-gutter / 2)};
-      margin-left: -#{utils.rem($grid-gutter / 2)};
+      margin-right: -#{utils.rem(math.div($grid-gutter, 2))};
+      margin-left: -#{utils.rem(math.div($grid-gutter, 2))};
     }
   } @else {
     @error '[style-grids -> styles-grid -> row] : The variable $grid-gutter is undefined';
@@ -33,7 +34,7 @@
   }
 
   @for $i from 1 through $rows-cols-max-columns {
-    $percent: 100% / $i;
+    $percent: math.div(100%, $i);
 
     .#{$rows-prefix}row-cols-#{$i}#{$bp} {
       > *,

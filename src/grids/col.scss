@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 @use '@wide/styles-utils' as utils;
 @use '../variables' as *;
@@ -10,8 +11,8 @@
 @mixin col-common-rules() {
   position: relative;
   width: 100%;
-  padding-right: utils.rem($grid-gutter / 2);
-  padding-left: utils.rem($grid-gutter / 2);
+  padding-right: utils.rem(math.div($grid-gutter, 2));
+  padding-left: utils.rem(math.div($grid-gutter, 2));
 }
 
 ///
@@ -40,7 +41,7 @@
   }
 
   @for $i from 1 through $cols {
-    $percent: 100% / ($cols / $i);
+    $percent: math.div(100%, math.div($cols, $i));
 
     .#{$cols-prefix}col-#{$i}#{$bp} {
       @include col-common-rules;
