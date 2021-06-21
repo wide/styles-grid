@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 @use '@wide/styles-utils' as utils;
 @use '../variables' as *;
@@ -15,8 +16,8 @@
       width: 100%;
       margin-right: auto;
       margin-left: auto;
-      padding-right: utils.rem($grid-gutter / 2);
-      padding-left: utils.rem($grid-gutter / 2);
+      padding-right: utils.rem(math.div($grid-gutter, 2));
+      padding-left: utils.rem(math.div($grid-gutter, 2));
     }
   } @else {
     @error '[style-grids -> styles-grid -> container] : The variable $grid-gutter is undefined';
